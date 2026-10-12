@@ -20,15 +20,21 @@ while True: # Use while loop for repeating the Menu (because true always True)
         value = int(input("Enter the Amount: "))# note the amount of expence (thats why in is use to convert it into number)
         print("Expense:", title)
         print("Amount:", value)
-        transaction=dict(zip(title,value)) #make the transaction of expenses & convet them to dictionary     
-        Expense.append(transaction) # store the transaction in expense
+        transation={title:value}# store the each transation in each diff dictionary
+        Expense.append(transation)
 
     elif choice == "2":
         print("Expense Sheet :")
         print(Expense) # now here we print expense dictionay
 
     elif choice == "3":
-        print(sum(Expense.values())) # now sum of the expenses dictionay valus 
+        total=0
+
+        for item in Expense:
+            total=total+ list(item.values())[0]
+        
+
+        print("Total Expense:", total)# now sum of the expenses dictionay valus 
 
     elif choice == "4":
         print("Goodbye, bro!")
