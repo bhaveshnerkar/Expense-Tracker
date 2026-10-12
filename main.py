@@ -1,6 +1,6 @@
   
 
-Expense = {} # Make empty dictionary
+Expense = [] # Make empty list
 
 while True: # Use while loop for repeating the Menu (because true always True)
     print("==============================")
@@ -20,7 +20,8 @@ while True: # Use while loop for repeating the Menu (because true always True)
         value = int(input("Enter the Amount: "))# note the amount of expence (thats why in is use to convert it into number)
         print("Expense:", title)
         print("Amount:", value)
-        Expense[title]=value # store the Expense & it's values in Dictionay in key:value pair
+        transaction=dict(zip(title,value)) #make the transaction of expenses & convet them to dictionary     
+        Expense.append(transaction) # store the transaction in expense
 
     elif choice == "2":
         print("Expense Sheet :")
