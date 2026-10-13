@@ -1,6 +1,6 @@
   
 
-Expense = [] # Make empty dictionary
+Expense = [] # Make empty list
 
 while True: # Use while loop for repeating the Menu (because true always True)
     print("==============================")
