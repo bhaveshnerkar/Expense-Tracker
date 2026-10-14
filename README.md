@@ -1,2 +1,2 @@
 # Expense-Tracker
-# It is
+# It is simple 
