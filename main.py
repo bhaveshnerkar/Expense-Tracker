@@ -1,6 +1,6 @@
   
 
-Expense = [] # Make empty list
+Expense = [] # Make empty dictionary
 
 while True: # Use while loop for repeating the Menu (because true always True)
     print("==============================")
@@ -37,7 +37,7 @@ while True: # Use while loop for repeating the Menu (because true always True)
 
         print("Expense:", title)
         print("Amount:",amount)
-        transation={title:amount}# store the each transation in each diff dictionary
+        transation={"title":title,"amount": amount}# store the each transation in each diff dictionary
         Expense.append(transation)
         
 
@@ -45,22 +45,28 @@ while True: # Use while loop for repeating the Menu (because true always True)
         print("--------------------")
         print("  Expense Sheet :")
         print("--------------------")
-        for item in Expense:
-            title = list(item.keys())[0]
-            value = list(item.values())[0]
-            print(title,"=",value)
+        if not Expense:
+            print("No expenses recordednyeet !")
+        else:
+
+            for item in Expense:
+                title = item["title"]
+                value = item["amount"]
+                print(title,"=",value,"Rs.")
 
     elif choice == "3":
+        if not Expense:
+            print("No expemses recorded yet !")
+        else:
+            total=0
 
-        total=0
-
-        for item in Expense:
-            total=total+ list(item.values())[0]
+            for item in Expense:
+                total += item["amount"]
         
-        print("---------------")
-        print("     Total     ")
-        print("---------------")
-        print(total,"Rs.")# now sum of the expenses dictionay valus 
+            print("---------------")
+            print("     Total     ")
+            print("---------------")
+            print(total,"Rs.")# now sum of the expenses dictionay valus 
        
 
     elif choice == "4":
