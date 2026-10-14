@@ -1,2 +1,2 @@
 # Expense-Tracker
-# It is simple python
+# It is simple python-project
