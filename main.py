@@ -1,8 +1,8 @@
   
 
-Expense = [] # Make empty dictionary
+Expense = []  
 
-while True: # Use while loop for repeating the Menu (because true always True)
+while True: 
     print("==============================")
     print("   PYTHON EXPENSE TRACKER")
     print("==============================")
@@ -12,9 +12,9 @@ while True: # Use while loop for repeating the Menu (because true always True)
     print("3. Calculate Total")
     print("4. Exit")
 
-    choice = input("Enter your choice: ") # use this to store the user choosen operation
+    choice = input("Enter your choice: ")
 
-# Use the if-elif-else for impliment operation 
+
     if choice == "1": 
         title = input("Enter the Expense: ").strip()
         if not title:
@@ -22,8 +22,7 @@ while True: # Use while loop for repeating the Menu (because true always True)
             print("Expense name cannot be empty!")
             print("-----------------------------")
             continue
-        # note the expense
-    # note the amount of expence (thats why in is use to convert it into number)
+       
         try:
             amount=int(input("Enter the Amount:"))
             if amount<=0:
@@ -37,7 +36,7 @@ while True: # Use while loop for repeating the Menu (because true always True)
 
         print("Expense:", title)
         print("Amount:",amount)
-        transation={"title":title,"amount": amount}# store the each transation in each diff dictionary
+        transation={"title":title,"amount": amount}
         Expense.append(transation)
         
 
@@ -46,7 +45,7 @@ while True: # Use while loop for repeating the Menu (because true always True)
         print("  Expense Sheet :")
         print("--------------------")
         if not Expense:
-            print("No expenses recordednyeet !")
+            print("No expenses recorded yet !")
         else:
 
             for item in Expense:
@@ -56,7 +55,7 @@ while True: # Use while loop for repeating the Menu (because true always True)
 
     elif choice == "3":
         if not Expense:
-            print("No expemses recorded yet !")
+            print("No expenses recorded yet !")
         else:
             total=0
 
@@ -66,7 +65,7 @@ while True: # Use while loop for repeating the Menu (because true always True)
             print("---------------")
             print("     Total     ")
             print("---------------")
-            print(total,"Rs.")# now sum of the expenses dictionay valus 
+            print(total,"Rs.")
        
 
     elif choice == "4":
@@ -74,9 +73,9 @@ while True: # Use while loop for repeating the Menu (because true always True)
         break
 
     else:
-        print("Invalid choice. Please enter 1, 2, 3, or 4.") # for invalid options
+        print("Invalid choice. Please enter 1, 2, 3, or 4.")
 
-    print() #Use for blank line 
+    print() 
 
 
 
