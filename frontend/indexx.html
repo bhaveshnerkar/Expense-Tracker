@@ -1,0 +1,185 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ExpenseFlow — Expense Tracker</title>
+<link rel="stylesheet" href="/static/style.css">
+  <script src="/script.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="brand" href="#"><span class="brand-mark">E</span> ExpenseFlow</a>
+    <p class="nav-caption">WORKSPACE</p>
+    <nav class="sidebar-nav" aria-label="Main navigation">
+      <button class="nav-link active" data-page="dashboard">▦ <span>Dashboard</span></button>
+      <button class="nav-link" data-page="transactions">⇄ <span>Transactions</span></button>
+      <button class="nav-link" data-page="reports">▥ <span>Reports</span></button>
+      <button class="nav-link" data-page="settings">⚙ <span>Settings</span></button>
+    </nav>
+    <div class="sidebar-note">
+      <strong>Small steps add up.</strong>
+      <p>Track today to plan for tomorrow.</p>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <section class="page-section active" id="dashboard">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">OVERVIEW</p>
+          <h1>Good to see you.</h1>
+          <p class="subtitle">Here's a snapshot of your spending.</p>
+        </div>
+        <button class="button primary" data-action="add">＋ Add expense</button>
+      </header>
+      <div class="stats">
+        <article class="stat-card"><span>Total expenses</span><strong id="totalExpenses">₹0.00</strong><small>Across all transactions</small></article>
+        <article class="stat-card"><span>Transactions</span><strong id="transactionCount">0</strong><small>Expenses recorded</small></article>
+        <article class="stat-card"><span>Average expense</span><strong id="averageExpense">₹0.00</strong><small>Average per transaction</small></article>
+      </div>
+      <div class="grid-two">
+        <section class="panel">
+          <div class="panel-heading">
+            <div><h2>Recent transactions</h2><p>Your latest spending activity</p></div>
+            <button class="text-button" data-page="transactions">View all →</button>
+          </div>
+          <div id="recentList"></div>
+        </section>
+        <section class="panel">
+          <div class="panel-heading"><div><h2>Spending snapshot</h2><p>Where your money is going</p></div></div>
+          <strong class="snapshot-total" id="snapshotTotal">₹0.00</strong>
+          <div id="dashboardCategories" class="category-bars"></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="page-section" id="transactions">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">YOUR MONEY, ORGANIZED</p>
+          <h1>Transactions</h1>
+          <p class="subtitle">Add, find, and manage your expenses.</p>
+        </div>
+        <button class="button primary" id="addExpenseButton">＋ Add expense</button>
+      </header>
+
+      <section class="panel form-panel" id="formPanel" hidden>
+        <div class="panel-heading">
+          <div><h2 id="formTitle">Add an expense</h2><p>Enter your transaction details.</p></div>
+          <button class="icon-button" id="closeForm" aria-label="Close form">✕</button>
+        </div>
+        <form id="expenseForm">
+          <input type="hidden" id="expenseId">
+          <div class="form-grid">
+            <label>Expense name<input id="expenseName" maxlength="80" placeholder="e.g. Lunch" required></label>
+            <label>Amount<input id="expenseAmount" type="number" min="0.01" step="0.01" placeholder="0.00" required></label>
+            <label>Category
+              <select id="expenseCategory">
+                <option>Food</option><option>Transport</option><option>Shopping</option>
+                <option>Bills</option><option>Education</option><option>Health</option>
+                <option>Entertainment</option><option>Other</option>
+              </select>
+            </label>
+            <label>Date<input id="expenseDate" type="date" required></label>
+            <label class="wide">Notes (optional)<input id="expenseNotes" maxlength="200" placeholder="Add a short note"></label>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="button secondary" id="cancelForm">Cancel</button>
+            <button type="submit" class="button primary">Save expense</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel table-panel">
+        <div class="panel-heading">
+          <div><h2>All transactions</h2><p id="tableSummary">Manage your recorded expenses</p></div>
+          <span class="pill" id="rowCount">0 items</span>
+        </div>
+        <div class="toolbar">
+          <input id="searchInput" type="search" placeholder="Search expenses…" aria-label="Search expenses">
+          <select id="categoryFilter" aria-label="Filter category">
+            <option value="">All categories</option><option>Food</option><option>Transport</option>
+            <option>Shopping</option><option>Bills</option><option>Education</option>
+            <option>Health</option><option>Entertainment</option><option>Other</option>
+          </select>
+          <select id="sortSelect" aria-label="Sort expenses">
+            <option value="newest">Newest first</option><option value="oldest">Oldest first</option>
+            <option value="high">Amount: high to low</option><option value="low">Amount: low to high</option>
+          </select>
+        </div>
+        <div class="table-wrap" id="tableWrap">
+          <table>
+            <thead><tr><th>Expense</th><th>Category</th><th>Date</th><th>Amount</th><th>Actions</th></tr></thead>
+            <tbody id="transactionRows"></tbody>
+          </table>
+        </div>
+        <div class="empty-state" id="emptyTransactions">
+          <div class="empty-symbol">↗</div>
+          <h3>No expenses found</h3>
+          <p>Add an expense or adjust your search and filters.</p>
+          <button class="button secondary" data-action="add">Add your first expense</button>
+        </div>
+      </section>
+    </section>
+
+    <section class="page-section" id="reports">
+      <header class="page-header">
+        <div><p class="eyebrow">INSIGHTS & TRENDS</p><h1>Reports</h1><p class="subtitle">Understand your spending over time.</p></div>
+        <label class="month-label">Month <input type="month" id="reportMonth"></label>
+      </header>
+      <div class="stats">
+        <article class="stat-card"><span>Selected month</span><strong id="monthTotal">₹0.00</strong><small id="monthLabel">Spending this month</small></article>
+        <article class="stat-card"><span>Transactions</span><strong id="monthCount">0</strong><small>For selected month</small></article>
+        <article class="stat-card"><span>Largest expense</span><strong id="largestAmount">₹0.00</strong><small id="largestName">No expenses yet</small></article>
+      </div>
+      <div class="grid-two">
+        <section class="panel">
+          <div class="panel-heading"><div><h2>Spending by category</h2><p>Selected month</p></div></div>
+          <div id="reportCategories" class="category-bars"></div>
+          <p id="reportEmpty" class="muted">Add expenses to see a breakdown.</p>
+        </section>
+        <section class="panel">
+          <div class="panel-heading"><div><h2>Last 6 months</h2><p>Monthly spending comparison</p></div></div>
+          <div id="monthlyBars" class="monthly-bars"></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="page-section" id="settings">
+      <header class="page-header">
+        <div><p class="eyebrow">MAKE IT YOURS</p><h1>Settings</h1><p class="subtitle">Personalize your ExpenseFlow experience.</p></div>
+      </header>
+      <section class="panel settings-panel">
+        <div class="settings-row">
+          <div><h2>Currency</h2><p>Choose how amounts are displayed.</p></div>
+          <select id="currencySetting">
+            <option value="INR">Indian Rupee (₹ INR)</option><option value="USD">US Dollar ($ USD)</option>
+            <option value="EUR">Euro (€ EUR)</option><option value="GBP">British Pound (£ GBP)</option>
+          </select>
+        </div>
+        <div class="settings-row">
+          <div><h2>Appearance</h2><p>Switch between light and dark themes.</p></div>
+          <label class="switch-label"><span id="themeText">Light mode</span><input type="checkbox" id="themeToggle"><span class="switch"></span></label>
+        </div>
+        <div class="settings-row">
+          <div><h2>Export data</h2><p>Download your transactions as a CSV file.</p></div>
+          <button class="button secondary" id="exportButton">Export CSV</button>
+        </div>
+        <div class="settings-row danger-row">
+          <div><h2>Clear all transactions</h2><p>Remove all saved expenses. This cannot be undone.</p></div>
+          <button class="button danger" id="clearButton">Clear data</button>
+        </div>
+      </section>
+      <p class="settings-note">Your expenses are saved using Python and SQLite.</p>
+    </section>
+
+    <footer class="footer"><span>ExpenseFlow</span><span>Made for clearer money habits.</span></footer>
+  </main>
+</div>
+<script src="/static/script.js" defer></script>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
