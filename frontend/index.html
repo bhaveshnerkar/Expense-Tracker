@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker</title>
+ <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/script.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <h1>Expense Tracker</h1>
+    <p>Track your spending, one step at a time.</p>
+  </header>
+
+  <main class="container">
+    <section class="summary">
+      <article class="card">
+        <h2>Total Expenses</h2>
+        <p id="totalExpenses">₹0.00</p>
+      </article>
+      <article class="card">
+        <h2>This Month</h2>
+        <p id="monthlyExpenses">₹0.00</p>
+      </article>
+      <article class="card">
+        <h2>Number of Expenses</h2>
+        <p id="expenseCount">0</p>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>Add an Expense</h2>
+      <form id="expenseForm">
+        <label for="name">Expense name</label>
+        <input id="name" name="name" type="text" placeholder="e.g. Lunch" required>
+
+        <label for="amount">Amount (₹)</label>
+        <input id="amount" name="amount" type="number" min="0.01" step="0.01" required>
+
+        <label for="category">Category</label>
+        <select id="category" name="category">
+          <option>Food</option>
+          <option>Travel</option>
+          <option>Education</option>
+          <option>Shopping</option>
+          <option>Bills</option>
+          <option>Other</option>
+        </select>
+
+        <label for="date">Date</label>
+        <input id="date" name="date" type="date" required>
+
+        <label for="notes">Notes (optional)</label>
+        <input id="notes" name="notes" type="text" placeholder="Add a note">
+
+        <button type="submit">Add Expense</button>
+        <p id="formMessage" role="status"></p>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Your Expenses</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Amount</th>
+              <th>Category</th>
+              <th>Date</th>
+              <th>Notes</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="expenseList"></tbody>
+        </table>
+      </div>
+      <p id="emptyMessage">Loading expenses...</p>
+    </section>
+  </main>
+</body>
+</html>
