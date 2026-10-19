@@ -1,84 +1,37 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Expense Tracker</title>
- <link rel="stylesheet" href="/static/style.css">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f6fb"><title>Expense Tracker</title>
+  <link rel="stylesheet" href="/static/style.css">
   <script src="/static/script.js" defer></script>
 </head>
 <body>
-  <header class="topbar">
-    <h1>Expense Tracker</h1>
-    <p>Track your spending, one step at a time.</p>
-  </header>
-
-  <main class="container">
-    <section class="summary">
-      <article class="card">
-        <h2>Total Expenses</h2>
-        <p id="totalExpenses">₹0.00</p>
-      </article>
-      <article class="card">
-        <h2>This Month</h2>
-        <p id="monthlyExpenses">₹0.00</p>
-      </article>
-      <article class="card">
-        <h2>Number of Expenses</h2>
-        <p id="expenseCount">0</p>
-      </article>
+<div class="app-shell">
+  <aside class="sidebar"><div class="brand-mark">₹</div><div class="brand-name">Expense<span>Tracker</span></div><p class="sidebar-caption">A clearer view of your money.</p><div class="sidebar-note"><span class="note-dot"></span><span>Simple spending, smarter choices.</span></div><p class="sidebar-footer">Your money. Your overview.</p></aside>
+  <main class="main-content">
+    <header class="page-header"><div><p class="eyebrow">PERSONAL FINANCE</p><h1>Your expenses, <span>under control.</span></h1><p class="subheading">Add your spending and keep track of where it goes.</p></div><div class="date-chip" id="todayLabel">Today</div></header>
+    <section class="summary-grid" aria-label="Expense summary">
+      <article class="summary-card summary-primary"><div class="summary-top"><span>Total expenses</span><span class="summary-icon">₹</span></div><p class="summary-value" id="totalExpenses">₹0.00</p><p class="summary-help">All recorded spending</p></article>
+      <article class="summary-card"><div class="summary-top"><span>This month</span><span class="summary-icon purple">↗</span></div><p class="summary-value" id="monthlyExpenses">₹0.00</p><p class="summary-help">Spending in the current month</p></article>
+      <article class="summary-card"><div class="summary-top"><span>Transactions</span><span class="summary-icon orange">#</span></div><p class="summary-value" id="expenseCount">0</p><p class="summary-help">Expenses recorded</p></article>
     </section>
-
-    <section class="card">
-      <h2>Add an Expense</h2>
-      <form id="expenseForm">
-        <label for="name">Expense name</label>
-        <input id="name" name="name" type="text" placeholder="e.g. Lunch" required>
-
-        <label for="amount">Amount (₹)</label>
-        <input id="amount" name="amount" type="number" min="0.01" step="0.01" required>
-
-        <label for="category">Category</label>
-        <select id="category" name="category">
-          <option>Food</option>
-          <option>Travel</option>
-          <option>Education</option>
-          <option>Shopping</option>
-          <option>Bills</option>
-          <option>Other</option>
-        </select>
-
-        <label for="date">Date</label>
-        <input id="date" name="date" type="date" required>
-
-        <label for="notes">Notes (optional)</label>
-        <input id="notes" name="notes" type="text" placeholder="Add a note">
-
-        <button type="submit">Add Expense</button>
-        <p id="formMessage" role="status"></p>
-      </form>
-    </section>
-
-    <section class="card">
-      <h2>Your Expenses</h2>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Amount</th>
-              <th>Category</th>
-              <th>Date</th>
-              <th>Notes</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="expenseList"></tbody>
-        </table>
-      </div>
-      <p id="emptyMessage">Loading expenses...</p>
-    </section>
+    <section class="content-grid">
+      <article class="panel add-panel"><div class="panel-heading"><div><p class="eyebrow">NEW TRANSACTION</p><h2>Add an expense</h2></div><span class="heading-icon">＋</span></div>
+        <form id="expenseForm">
+          <div class="field"><label for="name">Expense name</label><input id="name" name="name" type="text" placeholder="e.g. Lunch, bus ticket" maxlength="100" required></div>
+          <div class="field-row"><div class="field"><label for="amount">Amount (₹)</label><input id="amount" name="amount" type="number" min="0.01" step="0.01" placeholder="0.00" required></div><div class="field"><label for="category">Category</label><select id="category" name="category"><option>Food</option><option>Travel</option><option>Education</option><option>Shopping</option><option>Bills</option><option>Health</option><option>Other</option></select></div></div>
+          <div class="field"><label for="date">Date</label><input id="date" name="date" type="date" required></div>
+          <div class="field"><label for="notes">Notes <span class="optional">(optional)</span></label><textarea id="notes" name="notes" rows="3" placeholder="Add a note to remember this expense" maxlength="500"></textarea></div>
+          <button class="button button-primary" id="submitButton" type="submit"><span>＋</span> Add expense</button><p class="form-message" id="formMessage" role="status" aria-live="polite"></p>
+        </form>
+      </article>
+      <article class="panel expenses-panel"><div class="panel-heading list-heading"><div><p class="eyebrow">TRANSACTION HISTORY</p><h2>Recent expenses</h2></div><button type="button" class="button button-light" id="refreshButton">Refresh</button></div>
+        <div class="table-wrap"><table><thead><tr><th>Expense</th><th>Category</th><th>Date</th><th class="amount-cell">Amount</th><th>Notes</th><th>Action</th></tr></thead><tbody id="expenseList"></tbody></table>
+          <div class="empty-state" id="emptyMessage"><div class="empty-icon">↗</div><h3>No expenses yet</h3><p>Add your first expense using the form.</p></div>
+        </div><div class="list-footer"><span id="listCount">0 transactions</span><span>Stored in your project database</span></div>
+      </article>
+    </section><footer class="page-footer">Small steps make money easier to understand.</footer>
   </main>
-</body>
-</html>
+</div>
+</body></html>
